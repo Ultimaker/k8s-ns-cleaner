@@ -25,7 +25,7 @@ podTemplate(label: 'jenkins-craft-pipeline', inheritFrom: 'default', containers:
           mkdir -p $GOPATH/src/github.com/Ultimaker
           ln -s `pwd` $GOPATH/src/github.com/Ultimaker/k8s-ns-cleaner
           cd $GOPATH/src/github.com/Ultimaker/k8s-ns-cleaner &&
-          go get ./
+          go get -v ./
         '''
       }
     }

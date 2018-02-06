@@ -16,5 +16,7 @@ spec:
             image: eu.gcr.io/um-website-193311/kube-system/ns-cleaner:_BRANCH_SLUG_
             imagePullPolicy: Always
             args:
-              - /ns-cleaner
+              - /bin/sh
+              - -c
+              - /usr/bin/ns-cleaner
           restartPolicy: Never
