@@ -6,7 +6,7 @@ metadata:
   labels:
     branch: _BRANCH_SLUG_
 spec:
-  schedule: "*/5 * * * *" # Every 5 minutes.
+  schedule: "* * * * *" # every minute
   jobTemplate:
     spec:
       template:
