@@ -34,7 +34,7 @@ podTemplate(label: 'jenkins-craft-pipeline', inheritFrom: 'default', containers:
       container('golang') {
         sh '''
           cd $GOPATH/src/github.com/Ultimaker/k8s-ns-cleaner &&
-          go build -v -o bin/ns-cleaner main.go
+          CGO_ENABLED=0 GOOS=linux go build -v -a -installsuffix cgo -o bin/ns-cleaner main.go
         '''
       }
     }

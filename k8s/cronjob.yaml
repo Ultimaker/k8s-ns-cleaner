@@ -12,7 +12,7 @@ spec:
       template:
         spec:
           containers:
-          - name: web-geoip-cronjob
+          - name: ns-cleaner
             image: eu.gcr.io/um-website-193311/kube-system/ns-cleaner:_BRANCH_SLUG_
             imagePullPolicy: Always
             args:
