@@ -6,11 +6,12 @@ metadata:
   labels:
     branch: _BRANCH_SLUG_
 spec:
-  schedule: "* * * * *" # every minute
+  schedule: "*/5 * * * *" # every 5 minutes
   jobTemplate:
     spec:
       template:
         spec:
+          serviceAccountName: namespace-controller
           containers:
           - name: ns-cleaner
             image: eu.gcr.io/um-website-193311/kube-system/ns-cleaner:_BRANCH_SLUG_

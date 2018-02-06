@@ -32,11 +32,11 @@ func main() {
 
 	for _, ns := range nsList.Items {
 		fmt.Print("check if ", ns.Name, " has correct labels... ")
-		labels := ns.Annotations
+		labels := ns.Labels
 
 		if val, ok := labels["expiresAt"]; ok {
-			fmt.Print("yes ")
 			expiresAt, err := time.Parse(format, val)
+			fmt.Print("yes, expires at ", expiresAt.String(), ", now = ", time.Now().String())
 
 			if err != nil {
 				fmt.Println(err)
