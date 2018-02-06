@@ -11,6 +11,8 @@ import (
 )
 
 func main() {
+	fmt.Println("start ns-cleaner")
+
 	config, err := rest.InClusterConfig()
 	format := "20060102T150405"
 
@@ -29,9 +31,11 @@ func main() {
 	nsList, err := cli.CoreV1().Namespaces().List(v1.ListOptions{})
 
 	for _, ns := range nsList.Items {
+		fmt.Print("check if ", ns.Name, " has correct labels... ")
 		labels := ns.Annotations
 
 		if val, ok := labels["expiresAt"]; ok {
+			fmt.Print("yes ")
 			expiresAt, err := time.Parse(format, val)
 
 			if err != nil {
@@ -40,12 +44,15 @@ func main() {
 			}
 
 			if time.Now().After(expiresAt) {
+				fmt.Println("expired, remove namespace")
 				err := cli.CoreV1().Namespaces().Delete(ns.Name, &v1.DeleteOptions{})
 
 				if err != nil {
 					fmt.Println(err)
 				}
 			}
+		} else {
+			fmt.Println("no")
 		}
 	}
 }
