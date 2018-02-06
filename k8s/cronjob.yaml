@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: playground-namespace-cleaner
+  namespace: kube-system
+  labels:
+    branch: _BRANCH_SLUG_
+spec:
+  schedule: "*/5 * * * *" # Every 5 minutes.
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: web-geoip-cronjob
+            image: eu.gcr.io/um-website-193311/kube-system/ns-cleaner:_BRANCH_SLUG_
+            imagePullPolicy: Always
+            args:
+              - /ns-cleaner
+          restartPolicy: Never
