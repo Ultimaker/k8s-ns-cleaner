@@ -36,7 +36,7 @@ func main() {
 
 		if val, ok := labels["expiresAt"]; ok {
 			expiresAt, err := time.Parse(format, val)
-			fmt.Print("yes, expires at ", expiresAt.String(), ", now = ", time.Now().String())
+			fmt.Print("yes ")
 
 			if err != nil {
 				fmt.Println(err)
@@ -52,7 +52,7 @@ func main() {
 				}
 			}
 		} else {
-			fmt.Println("no")
+			fmt.Println("not expired")
 		}
 	}
 }
