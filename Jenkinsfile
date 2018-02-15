@@ -1,6 +1,7 @@
 #!/usr/bin/groovy
 @Library('k8s-jenkins-tools') _
 import com.ultimaker.Slug
+import com.ultimaker.Random
 
 def credentialsFile = 'gcloud-jenkins-service-account'
 def projectName = 'um-website-193311'
@@ -10,13 +11,16 @@ def zone = 'europe-west4-b'
 def slugify = new Slug()
 def branchSlug = slugify.slug(env.BRANCH_NAME)
 
-podTemplate(label: 'jenkins-ns-cleaner-pipeline', inheritFrom: 'default', containers: [
+def random = new Random()
+def podLabel = random.string(32)
+
+podTemplate(label: "${podLabel}", inheritFrom: 'default', containers: [
   containerTemplate(name: 'golang', image: 'golang:1.9.2', ttyEnabled: true, command: 'cat')
 ], volumes: [
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
   hostPathVolume(mountPath: '/usr/bin/docker', hostPath: '/usr/bin/docker')
 ]) {
-  node('jenkins-ns-cleaner-pipeline') {
+  node("${podLabel}") {
     checkout scm
 
     stage('install dependencies') {
