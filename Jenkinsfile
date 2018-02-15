@@ -10,13 +10,13 @@ def zone = 'europe-west4-b'
 def slugify = new Slug()
 def branchSlug = slugify.slug(env.BRANCH_NAME)
 
-podTemplate(label: 'jenkins-craft-pipeline', inheritFrom: 'default', containers: [
+podTemplate(label: 'jenkins-ns-cleaner-pipeline', inheritFrom: 'default', containers: [
   containerTemplate(name: 'golang', image: 'golang:1.9.2', ttyEnabled: true, command: 'cat')
 ], volumes: [
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
   hostPathVolume(mountPath: '/usr/bin/docker', hostPath: '/usr/bin/docker')
 ]) {
-  node('jenkins-craft-pipeline') {
+  node('jenkins-ns-cleaner-pipeline') {
     checkout scm
 
     stage('install dependencies') {
